@@ -6,6 +6,7 @@ import ru.vsu.vadim.organizer.repository.EventRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class EventServiceImpl implements EventService {
     private final EventRepository repository;
@@ -14,14 +15,17 @@ public class EventServiceImpl implements EventService {
         this.repository = repository;
     }
 
+    @Override
     public void addEvent(Event event) {
         repository.save(event);
     }
 
+    @Override
     public List<Event> getAllEvents() {
         return repository.findAll();
     }
 
+    @Override
     public List<Event> getEventsByDatePrefix(String prefix) {
         List<Event> result = new ArrayList<>();
         for (Event event : repository.findAll()) {
@@ -32,7 +36,8 @@ public class EventServiceImpl implements EventService {
         return result;
     }
 
-    public Event getById(String id) throws EventNotFoundException {
+    @Override
+    public Event getById(UUID id) throws EventNotFoundException {
         Event event = repository.findById(id);
         if (event == null) {
             throw new EventNotFoundException(id);
@@ -40,7 +45,8 @@ public class EventServiceImpl implements EventService {
         return event;
     }
 
-    public void deleteById(String id) throws EventNotFoundException {
+    @Override
+    public void deleteById(UUID id) throws EventNotFoundException {
         boolean deleted = repository.deleteById(id);
         if (!deleted) {
             throw new EventNotFoundException(id);

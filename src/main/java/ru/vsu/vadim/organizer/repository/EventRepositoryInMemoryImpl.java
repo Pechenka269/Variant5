@@ -3,22 +3,23 @@ package ru.vsu.vadim.organizer.repository;
 import ru.vsu.vadim.organizer.model.Event;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class EventRepositoryInMemoryImpl implements EventRepository {
     private final List<Event> events = new ArrayList<>();
 
-    @Override
+
     public void save(Event event) {
         events.add(event);
     }
 
-    @Override
+
     public List<Event> findAll() {
         return events;
     }
 
-    @Override
-    public Event findById(String id) {
+
+    public Event findById(UUID id) {
         for (Event event : events) {
             if (event.getId().equals(id)) {
                 return event;
@@ -27,8 +28,8 @@ public class EventRepositoryInMemoryImpl implements EventRepository {
         return null;
     }
 
-    @Override
-    public boolean deleteById(String id) {
+
+    public boolean deleteById(UUID id) {
         for (int i = 0; i < events.size(); i++) {
             if (events.get(i).getId().equals(id)) {
                 events.remove(i);
